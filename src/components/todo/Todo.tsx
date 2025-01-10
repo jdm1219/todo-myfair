@@ -1,6 +1,6 @@
 import React from "react";
 import TodoInput from "./TodoInput";
-import TodoList from "./TodoList";
+import TodoWrapper from "./TodoWrapper";
 import styled from "@emotion/styled";
 
 const TodoTitle = styled.h1`
@@ -16,7 +16,7 @@ const Todo = () => {
     <div>
       <TodoTitle>To Do List</TodoTitle>
       <TodoInput />
-      <TodoList />
+      <TodoWrapper />
     </div>
   );
 };
