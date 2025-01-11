@@ -50,7 +50,7 @@ const TodoWrapper = () => {
     <TodoContainer >
       <TodoFilter />
       <TodoListContainer>
-        <TodoCount>총 {0}개</TodoCount>
+        <TodoCount>총 {filteredTodoList.length}개</TodoCount>
         <TodoList>
           {
             filteredTodoList.map(todoItem => (
