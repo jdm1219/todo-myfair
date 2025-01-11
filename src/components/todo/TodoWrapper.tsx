@@ -9,6 +9,7 @@ const TodoContainer = styled.div`
   gap: 32px;
   width: 737px;
   border-radius: 24px;
+  margin-top: 32px;
   padding: 32px;
   box-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.12), 0 0 6px 0 rgba(0, 0, 0, 0.06);
 `
