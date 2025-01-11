@@ -4,10 +4,12 @@ import TodoItem from "./TodoItem";
 import styled from "@emotion/styled";
 
 const TodoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
   width: 737px;
   border-radius: 24px;
   padding: 32px;
-  gap: 32px;
   box-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.12), 0 0 6px 0 rgba(0, 0, 0, 0.06);
 `
 
