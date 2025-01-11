@@ -29,17 +29,27 @@ const TodoInput = () => {
   const [inputValue, setInputValue] = useState("");
   const setTodoList = useSetRecoilState(todoListState);
 
-  const addTodoItem = () => {
-    setTodoList((prev) => [
-      ...prev,
-      {
-        id: todoId++,
-        content: inputValue,
-        isDone: false,
-      },
-    ]);
+  const validateInputValueLength = () => {
+    if (inputValue.length > 20) {
+      throw new Error("'할 일'은 20글자를 넘길 수 없습니다.");
+    }
+  };
 
-    setInputValue("");
+  const addTodoItem = () => {
+    try {
+      validateInputValueLength();
+
+      setTodoList((prev) => [
+        ...prev,
+        { id: todoId++, content: inputValue, isDone: false },
+      ]);
+
+      setInputValue("");
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
