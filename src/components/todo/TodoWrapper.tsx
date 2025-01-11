@@ -55,6 +55,7 @@ const TodoWrapper = () => {
           {
             filteredTodoList.map(todoItem => (
                 <TodoItem
+                  key={todoItem.id}
                   todo={todoItem}
                   onToggle={() => toggleTodo(todoItem.id)}
                   onDelete={() => deleteTodo(todoItem.id)}
