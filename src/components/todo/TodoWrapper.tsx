@@ -2,6 +2,8 @@ import React from "react";
 import TodoFilter from "./TodoFilter";
 import TodoItem from "./TodoItem";
 import styled from "@emotion/styled";
+import { useSetRecoilState , useRecoilValue } from "recoil";
+import { filteredTodoListState, todoListState } from "../../state/todoListState";
 
 const TodoContainer = styled.div`
   display: flex;
@@ -31,13 +33,35 @@ const TodoList = styled.ul`
 `
 
 const TodoWrapper = () => {
+  const setTodoList = useSetRecoilState(todoListState);
+  const filteredTodoList = useRecoilValue(filteredTodoListState);
+
+  const toggleTodo = (id: number) => {
+    setTodoList((prev) => prev.map((todo) =>
+      todo.id === id ? { ...todo, isDone: !todo.isDone } : todo
+    ));
+  };
+
+  const deleteTodo = (id: number) => {
+    setTodoList((prev) => prev.filter((todo) => todo.id !== id));
+  };
+
   return (
     <TodoContainer >
       <TodoFilter />
       <TodoListContainer>
         <TodoCount>총 {0}개</TodoCount>
         <TodoList>
-          <TodoItem />
+          {
+            filteredTodoList.map(todoItem => (
+                <TodoItem
+                  todo={todoItem}
+                  onToggle={() => toggleTodo(todoItem.id)}
+                  onDelete={() => deleteTodo(todoItem.id)}
+                />
+              )
+            )
+          }
         </TodoList>
       </TodoListContainer>
     </TodoContainer >
