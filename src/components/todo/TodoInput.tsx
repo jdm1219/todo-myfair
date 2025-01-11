@@ -29,6 +29,12 @@ const TodoInput = () => {
   const [inputValue, setInputValue] = useState("");
   const [todoList, setTodoList] = useRecoilState(todoListState);
 
+  const validateInputValueEmpty = () => {
+    if (!inputValue.trim().length) {
+      throw new Error("'할 일'은 공백일 수 없습니다.");
+    }
+  };
+
   const validateInputValueLength = () => {
     if (inputValue.length > 20) {
       throw new Error("'할 일'은 20글자를 넘길 수 없습니다.");
@@ -44,6 +50,7 @@ const TodoInput = () => {
 
   const addTodoItem = () => {
     try {
+      validateInputValueEmpty();
       validateInputValueLength();
       validateIncompleteTodoCount();
 
