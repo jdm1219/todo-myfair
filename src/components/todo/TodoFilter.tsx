@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { FilterType, todoListFilterState } from "../../state/todoListState";
+import { useRecoilState } from "recoil";
 
 const FilterContainer = styled.div`
   display: flex;
@@ -29,9 +31,12 @@ const FilterRadioLabel = styled.label<{ isSelected: boolean }>`
 
 
 const TodoFilter = () => {
-  const filter = 'All'
-  const filterOptions = ['All', 'To Do', 'Done'];
+  const [filter, setFilter] = useRecoilState(todoListFilterState);
+  const filterOptions: FilterType[] = ['All', 'To Do', 'Done'];
 
+  const handleChange = (value: FilterType) => {
+    setFilter(value);
+  }
 
   return (
     <FilterContainer>
@@ -45,6 +50,7 @@ const TodoFilter = () => {
             name="todoFilter"
             value={filterOption}
             checked={filter === filterOption}
+            onChange={() => handleChange(filterOption)}
           />
           {filterOption}
         </FilterRadioLabel>
