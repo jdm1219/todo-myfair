@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { todoListState } from "../../state/todoListState";
 
 const StyledInput = styled.input`
@@ -27,7 +27,7 @@ let todoId = 0;
 
 const TodoInput = () => {
   const [inputValue, setInputValue] = useState("");
-  const setTodoList = useSetRecoilState(todoListState);
+  const [todoList, setTodoList] = useRecoilState(todoListState);
 
   const validateInputValueLength = () => {
     if (inputValue.length > 20) {
@@ -35,9 +35,17 @@ const TodoInput = () => {
     }
   };
 
+  const validateIncompleteTodoCount = () => {
+    const incompleteTodos = todoList.filter(todo => !todo.isDone);
+    if (incompleteTodos.length >= 10) {
+      throw new Error("처리가 안된 '할 일'은 10개를 초과할 수 없습니다.");
+    }
+  };
+
   const addTodoItem = () => {
     try {
       validateInputValueLength();
+      validateIncompleteTodoCount();
 
       setTodoList((prev) => [
         ...prev,
