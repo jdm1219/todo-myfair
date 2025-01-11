@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
+import { useSetRecoilState } from "recoil";
+import { todoListState } from "../../state/todoListState";
 
 const StyledInput = styled.input`
   width: 737px;
@@ -21,11 +23,43 @@ const StyledInput = styled.input`
   }
 `;
 
+let todoId = 0;
+
 const TodoInput = () => {
+  const [inputValue, setInputValue] = useState("");
+  const setTodoList = useSetRecoilState(todoListState);
+
+  const addTodoItem = () => {
+    setTodoList((prev) => [
+      ...prev,
+      {
+        id: todoId++,
+        content: inputValue,
+        isDone: false,
+      },
+    ]);
+
+    setInputValue("");
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setInputValue(value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if(e.key === 'Enter') {
+      addTodoItem()
+    }
+  }
+
   return (
     <StyledInput
       type="text"
       placeholder="할 일을 입력해 주세요"
+      value={inputValue}
+      onChange={handleChange}
+      onKeyDown={handleKeyDown}
     />
   );
 };
